@@ -1,0 +1,42 @@
+spring:
+  main:
+    allow-bean-definition-overriding: true
+  batch:
+    job:
+      enabled: false  # Disable auto-job execution at startup
+    initialize-schema: always
+  
+  datasource:
+    url: jdbc:h2:mem:batchdb
+    username: sa
+    password: 
+    driverClassName: org.h2.Driver
+  
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddl-auto: update
+    show-sql: false
+
+sftp:
+  host: your-sftp-server
+  port: 22
+  username: your-username
+  password: your-password
+  remote:
+    directory:
+      input: /input
+      output: /output
+
+file:
+  local:
+    directory:
+      input: C:/shared/input
+      output: C:/shared/output
+      temp: C:/shared/temp
+
+jobs:
+  scheduler:
+    database-to-sftp: "0 0 1 * * ?"  # Run at 1 AM daily
+    file-to-sftp: "0 0 2 * * ?"      # Run at 2 AM daily
+    sftp-to-file: "0 0 3 * * ?"      # Run at 3 AM daily
